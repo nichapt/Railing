@@ -27,29 +27,22 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-    @task.status = 0
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+  
+    if @task.save
+      redirect_to @task, notice: 'Task was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task = Task.find(params[:id])
+  
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Task was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -81,6 +74,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :status)
+    params.require(:task).permit(:name, :status, :category_id)
   end
 end

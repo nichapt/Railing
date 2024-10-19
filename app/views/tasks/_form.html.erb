@@ -21,6 +21,11 @@
   </div>
 
   <div>
+  <%= form.label :category_id, "Category", style: "display: block" %>
+  <%= form.select :category_id, Category.all.collect { |c| [c.name, c.id] }, { include_blank: 'Select a category' }, style: "display: block" %>
+</div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

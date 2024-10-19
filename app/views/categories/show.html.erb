@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @category %>
+
+<h2>Tasks in this Category</h2>
+
+<% if @tasks.any? %>
+  <ul>
+    <% @tasks.each do |task| %>
+      <li>
+        <strong><%= task.name %></strong> - Status: <%= task.status == 1 ? "Complete" : "Incomplete" %>
+        <%= link_to "Edit", edit_task_path(task) %> |
+        <%= button_to "Destroy", task, method: :delete, data: { confirm: "Are you sure?" } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No tasks found for this category.</p>
+<% end %>
+
+<div>
+  <%= link_to "Edit this category", edit_category_path(@category) %> |
+  <%= link_to "Back to categories", categories_path %>
+</div>
